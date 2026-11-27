@@ -3,7 +3,7 @@
 Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / max), at the reboot checkpoint for RB-0004a.
 
 ## Phase
-Research. RB-0004a (issue #1) is in progress on branch `research/1-metal-loading-chain`, as a draft PR.
+Research. RB-0004a (issue #1) is in progress on branch `research/1-metal-loading-chain`, as draft PR #6 (https://github.com/ownback/Ryzentosh-dGPU/pull/6).
 
 ## Done: RB-0004a, user-space half
 Findings are in `docs/LLMs/re/RB-0004a-metal-loading-chain.md`.
