@@ -26,10 +26,16 @@ Also done:
 - RE helpers in `tools/re/`, now including `kext_superclass.py` and `dsc_fix_copy.py`.
 
 ## In flight
-- Issue #10, branch `docs/10-rename-scope`: README, BRIEF and CLAUDE.md scope for the rename (docs only).
+- Issue #10, PR #11 (`docs/10-rename-scope`): the rename/scope docs.
+- Issue #12, PR #13 (`research/12-bc-gate`, stacked on #11): the B/C gate check, in `docs/LLMs/re/RB-0004bc-gate.md`.
+  - B for Navi 31: dead (no gfx11 path; 64% of GFX10 opcodes are renumbered or removed on GFX11, so it needs a recompiler).
+  - B for the Raphael iGPU: proceed to the full RB-0004c.
+  - C: technically possible with AMFI intact (our kext publishes an `IOAccelerator` service naming Apple's guest bundle, with no fake PCI ID). But it is rejected on cost (a full Metal implementation plus an AIR compiler as the "host") and on parity (apps likely see "Paravirtual device").
+  - Consequence: no AMFI-intact dGPU Metal path survives parity and a sane cost on 25G241. The owner chooses among the options in the findings file (ADR-0004, ADR-0005).
+  - The Fable review requested changes; all of them are applied. The report to the Orchestrator is the next step.
 
 ## Next step (exact; the Orchestrator approved the M1.0 plan, run sequentially)
-1. **Combined B/C gate check:** a new issue, one draft PR, a Fable review, then a report to the Orchestrator.
+1. **Combined B/C gate check (#12, PR #13):** done and reviewed. Wait for the Orchestrator and owner decision on the options.
    - RB-0004c gate (#3): the ISA targets of the shader compilers in Apple's AMD bundles, including whether Apple's bundles could serve the RDNA2 Raphael iGPU (gfx1036).
    - RB-0004b gate (#2): whether AppleParavirtGPU refuses bare metal (VMM checks), and the size of the guest protocol.
 2. Only after the Orchestrator confirms: the display-driver ADR.
