@@ -1,4 +1,4 @@
-# TESTPLAN: Ryzentosh-dGPU
+# TESTPLAN: Ryzentosh-GPU
 
 | Parity target | Test | Host or device | Status |
 |---|---|---|---|

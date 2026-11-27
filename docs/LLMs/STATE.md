@@ -1,9 +1,9 @@
-# STATE: Ryzentosh-dGPU
+# STATE: Ryzentosh-GPU
 
-Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / high since the resume; max before). RB-0004a is complete and reviewed; PR #6 is ready for the squash merge.
+Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / high).
 
 ## Phase
-Research. RB-0004a (issue #1) is on branch `research/1-metal-loading-chain`, as PR #6, ready for review (https://github.com/ownback/Ryzentosh-GPU/pull/6).
+Research, M1.0. RB-0004a (issue #1) is merged (PR #6, squash c63e4ee). The repo is now ownback/Ryzentosh-GPU: one driver, RyzentoshGPU.kext, for the RX 7900 XTX and the Raphael iGPU (rename/scope PR for issue #10).
 
 ## Done: RB-0004a, all seven questions
 Findings are in `docs/LLMs/re/RB-0004a-metal-loading-chain.md`. The kernel half used KDK 25G241 (`/Library/Developer/KDKs/KDK_26.7.1_25G241.kdk`), whose kernel and kexts match the running build by LC_UUID.
@@ -26,12 +26,15 @@ Also done:
 - RE helpers in `tools/re/`, now including `kext_superclass.py` and `dsc_fix_copy.py`.
 
 ## In flight
-Nothing is running. The citation review (claude-fable-5-2 / high, at cfb3316) re-derived about 70 [V] citations and approved, with no blocking findings. Its two wording nits are fixed. PR #6 is marked ready, and the Root Orchestrator does the squash merge.
+- Issue #10, branch `docs/10-rename-scope`: README, BRIEF and CLAUDE.md scope for the rename (docs only).
 
-## Next step (exact)
-1. After the merge: delete the branch, and record the merge in this file on `main`.
-2. Wait for the Root Orchestrator to pick the next M1.0 item. The Lead's proposal, sent to the Orchestrator 2026-11-27: RB-0004c, then RB-0004b, then the ADR-0004 decision, with the display-driver ADR in parallel.
-3. When convenient, a small separate PR for the repo rename (ownback/Ryzentosh-GPU, one RyzentoshGPU.kext for the RX 7900 XTX and the Raphael iGPU): README, BRIEF and CLAUDE.md scope. Target tree: control plane `docs/Architecture/EFI-END-STATE.md`. RB-0005a/b/c are issues #7–#9 (later).
+## Next step (exact; the Orchestrator approved the M1.0 plan, run sequentially)
+1. **Combined B/C gate check:** a new issue, one draft PR, a Fable review, then a report to the Orchestrator.
+   - RB-0004c gate (#3): the ISA targets of the shader compilers in Apple's AMD bundles, including whether Apple's bundles could serve the RDNA2 Raphael iGPU (gfx1036).
+   - RB-0004b gate (#2): whether AppleParavirtGPU refuses bare metal (VMM checks), and the size of the guest protocol.
+2. Only after the Orchestrator confirms: the display-driver ADR.
+3. The X1 boot (RB-0004a): send the Orchestrator the exact EFI candidate spec when needed. It is batched with other EFI work, and the owner does an F8 boot.
+4. Later (M4 / RB-0003g, #5): Continuity Camera fails because VideoToolbox reports no H.264 hardware decode (from WIRELESS RB-W1).
 
 ## REA
 - No target is open (checked 2026-11-27 before the reboot).
