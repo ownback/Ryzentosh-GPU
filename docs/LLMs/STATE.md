@@ -26,10 +26,16 @@ Also done:
 - RE helpers in `tools/re/`, now including `kext_superclass.py` and `dsc_fix_copy.py`.
 
 ## In flight
-- Issue #10, branch `docs/10-rename-scope`: README, BRIEF and CLAUDE.md scope for the rename (docs only).
+- Issue #10, PR #11 (`docs/10-rename-scope`): the rename/scope docs.
+- Issue #12, branch `research/12-bc-gate` (stacked on #11): the B/C gate check. Findings are done in `docs/LLMs/re/RB-0004bc-gate.md`.
+  - B for Navi 31: dead (no gfx11 path; the ISA gap needs a recompiler).
+  - B for the Raphael iGPU: proceed to the full RB-0004c.
+  - C: dead for parity (fake Apple PCI device; the host must be a full Metal implementation).
+  - Consequence: no AMFI-intact Metal path for the dGPU on 25G241. This is an owner decision for ADR-0004 and ADR-0005.
+  - Review pending (Fable), then the report to the Orchestrator.
 
 ## Next step (exact; the Orchestrator approved the M1.0 plan, run sequentially)
-1. **Combined B/C gate check:** a new issue, one draft PR, a Fable review, then a report to the Orchestrator.
+1. **Combined B/C gate check (#12):** findings written. Next: draft PR, Fable review, fixes, then the report to the Orchestrator.
    - RB-0004c gate (#3): the ISA targets of the shader compilers in Apple's AMD bundles, including whether Apple's bundles could serve the RDNA2 Raphael iGPU (gfx1036).
    - RB-0004b gate (#2): whether AppleParavirtGPU refuses bare metal (VMM checks), and the size of the guest protocol.
 2. Only after the Orchestrator confirms: the display-driver ADR.
