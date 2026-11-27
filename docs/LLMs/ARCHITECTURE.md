@@ -1,4 +1,4 @@
-# ARCHITECTURE: Ryzentosh-dGPU
+# ARCHITECTURE: Ryzentosh-GPU
 
 Maintained by repo-cartographer. Empty until code exists.
 
