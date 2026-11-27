@@ -8,7 +8,7 @@ Source: [re/RB-0004a-metal-loading-chain.md](re/RB-0004a-metal-loading-chain.md)
 
 ### Properties on the accelerator service
 
-Metal finds the service through `IOServiceMatching("IOAccelerator")` plus `IOServicePublish` notifications. The service must therefore be an `IOAccelerator` subclass.
+Metal finds the service through `IOServiceMatching("IOAccelerator")` plus `IOServicePublish` notifications. The service must therefore be an `IOAccelerator` subclass. On x86 both kernel families qualify: `IOGraphicsAccelerator2` (IOAcceleratorFamily2, which Apple's AMD and paravirt drivers use) and `IOGPU` (IOGPUFamily) both derive from `IOAccelerator` (RB-0004a §1.5).
 
 | Key | Type | Consumer | Meaning |
 |---|---|---|---|
@@ -23,7 +23,7 @@ Metal finds the service through `IOServiceMatching("IOAccelerator")` plus `IOSer
 ### Device class
 
 - It must be a subclass of `_MTLDevice`, which Metal checks with `isSubclassOfClass:`. It must also implement `-initWithAcceleratorPort:` (an `io_service_t`).
-- It must override every abort stub of the base class `MTLIOAccelDevice`. The first known one is `-newArgumentEncoderWithLayout:`, whose base implementation tail-calls the abort stub `-newIndirectArgumentEncoderWithLayout:` (TESTPLAN T-0001).
+- It must override `-newArgumentEncoderWithLayout:`. The base class `MTLIOAccelDevice` implements it as a tail call to `-newIndirectArgumentEncoderWithLayout:`, which aborts. On 25G241 that is the only abort or `ud2` stub in Metal's IOAccel base classes. Apple's AMD driver overrides `-newArgumentEncoderWithLayout:` and `-newArgumentEncoderWithBufferBinding:` (TESTPLAN T-0001).
 
 ### Timing
 
@@ -31,5 +31,6 @@ Metal finds the service through `IOServiceMatching("IOAccelerator")` plus `IOSer
 
 ### Signing and placement (the gate ADR-0004 is about)
 
-- Every LV-enforcing platform client accepts only platform (Apple-signed, trust-cached) code: WindowServer, Safari, Finder, SystemUIServer, Messages and the WebKit GPU process.
+- AMFI checks library validation only in processes with `CS_REQUIRE_LV`. Each such platform client maps only platform code: WindowServer, Safari, Finder, SystemUIServer, Messages and the WebKit GPU process (RB-0004a §2.1).
+- The WebKit GPU process's sandbox maps executable code only from system-volume paths (`/System/Library/{Extensions,CoreServices,Frameworks,PrivateFrameworks,…}` and `/usr/lib`), not from `/Library/GPUBundles`.
 - kext_tools stages companion bundles into `/Library/GPUBundles` only when they are Apple-anchored or NVIDIA Developer ID.
