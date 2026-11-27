@@ -8,7 +8,7 @@ supports. Written by AI agents. Apple is not involved in this project.
 **Status:** research. Nothing here is ready to install yet. See [docs/Humans](docs/Humans/) and the
 [compatibility matrix](https://github.com/ownback/Ryzentosh/blob/main/docs/Hardware/COMPATIBILITY_MATRIX.md).
 
-**Releases:** RyzentoshGPU.kext for EFI/OC/Kexts (it replaces VermilionBoot and VermilionAudio; see the control plane's docs/Architecture/EFI-END-STATE.md), plus user-space bundles installed by Ryzentosh-POST.
+**Releases:** one kext, RyzentoshGPU.kext, for `EFI/OC/Kexts`. It replaces VermilionBoot and VermilionAudio, and contains separate framebuffer, HW-services and accelerator components. The user-space drivers (Metal, OpenGL, OpenCL, Vulkan, VideoToolbox) are separate bundles that [Ryzentosh-POST](https://github.com/ownback/Ryzentosh-POST) installs. ACPI tables, such as the GPU power-down methods, live in [Ryzentosh-ACPI](https://github.com/ownback/Ryzentosh-ACPI). Layout: the control plane's [EFI end state](https://github.com/ownback/Ryzentosh/blob/main/docs/Architecture/EFI-END-STATE.md).
 
 ## Reference hardware
 AMD Ryzen 9 7900X3D · Radeon RX 7900 XTX (XFX) · ASUS ROG STRIX B650E-I · macOS 26.7.1 (25G241) · OpenCore 1.0.8.
