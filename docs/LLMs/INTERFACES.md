@@ -33,4 +33,4 @@ Metal finds the service through `IOServiceMatching("IOAccelerator")` plus `IOSer
 
 - AMFI checks library validation only in processes with `CS_REQUIRE_LV`. Each such platform client maps only platform code: WindowServer, Safari, Finder, SystemUIServer, Messages and the WebKit GPU process (RB-0004a §2.1).
 - The WebKit GPU process's sandbox maps executable code only from system-volume paths (`/System/Library/{Extensions,CoreServices,Frameworks,PrivateFrameworks,…}` and `/usr/lib`), not from `/Library/GPUBundles`.
-- kext_tools stages companion bundles into `/Library/GPUBundles` only when they are Apple-anchored or NVIDIA Developer ID.
+- kext_tools stages companion bundles into `/Library/GPUBundles` only when they are Apple-signed or signed with NVIDIA's Developer ID kext-signing certificate.

@@ -1,9 +1,9 @@
 # STATE: Ryzentosh-dGPU
 
-Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / max), at the second reboot checkpoint. The RB-0004a kernel half is done and pushed (15e13e0). The citation review was stopped unfinished for the reboot, with no findings recorded.
+Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / high since the resume; max before). RB-0004a is complete and reviewed; PR #6 is ready for the squash merge.
 
 ## Phase
-Research. RB-0004a (issue #1) is on branch `research/1-metal-loading-chain`, as draft PR #6 (https://github.com/ownback/Ryzentosh-dGPU/pull/6).
+Research. RB-0004a (issue #1) is on branch `research/1-metal-loading-chain`, as PR #6, ready for review (https://github.com/ownback/Ryzentosh-GPU/pull/6).
 
 ## Done: RB-0004a, all seven questions
 Findings are in `docs/LLMs/re/RB-0004a-metal-loading-chain.md`. The kernel half used KDK 25G241 (`/Library/Developer/KDKs/KDK_26.7.1_25G241.kdk`), whose kernel and kexts match the running build by LC_UUID.
@@ -26,14 +26,12 @@ Also done:
 - RE helpers in `tools/re/`, now including `kext_superclass.py` and `dsc_fix_copy.py`.
 
 ## In flight
-Nothing is running. The citation review by the reviewer subagent (claude-fable-5-2 / high) was started at 15e13e0 and stopped for the owner reboot before it reported.
+Nothing is running. The citation review (claude-fable-5-2 / high, at cfb3316) re-derived about 70 [V] citations and approved, with no blocking findings. Its two wording nits are fixed. PR #6 is marked ready, and the Root Orchestrator does the squash merge.
 
-## Next step (exact; there is no kernel analysis left to resume)
-1. **Re-create the review inputs.** The new session scratchpad needs the thinned KDK kexts and amfid, `amfi.otool.txt`, and a fresh shared-cache extraction. The commands are at the top of `.private/rb-0004a/review-brief.md` (git ignores it).
-2. **Re-run the citation review.** Use the Agent type `reviewer` (Fable 5.2 / high, read-only), with the brief in that file and `<S>` replaced by the new scratchpad path.
-3. **Fix its findings** in the findings file, TESTPLAN and INTERFACES. Run a privacy scan, then commit and push.
-4. **Update the PR #6 body.** Cover the kernel half, the review result, the models (Opus 5.5 / max lead, Fable 5.2 / high review) and why the build and hardware-test stages are skipped (research only). Then mark the PR ready.
-5. **Send the summary to the Root Orchestrator thread.** Include the surviving ADR-0004 options, the X1 config (findings file, "Recommendation"), "no additional Linux captures needed" and the control-plane corrections below.
+## Next step (exact)
+1. After the merge: delete the branch, and record the merge in this file on `main`.
+2. Wait for the Root Orchestrator to pick the next M1.0 item. The Lead's proposal, sent to the Orchestrator 2026-11-27: RB-0004c, then RB-0004b, then the ADR-0004 decision, with the display-driver ADR in parallel.
+3. When convenient, a small separate PR for the repo rename (ownback/Ryzentosh-GPU, one RyzentoshGPU.kext for the RX 7900 XTX and the Raphael iGPU): README, BRIEF and CLAUDE.md scope. Target tree: control plane `docs/Architecture/EFI-END-STATE.md`. RB-0005a/b/c are issues #7–#9 (later).
 
 ## REA
 - No target is open (checked 2026-11-27 before the reboot).
