@@ -1,6 +1,6 @@
 # STATE: Ryzentosh-dGPU
 
-Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / max). RB-0004a kernel half done; citation review in progress.
+Updated: 2026-11-27 by the Project Lead (claude-opus-5-5 / max), at the second reboot checkpoint. The RB-0004a kernel half is done and pushed (15e13e0). The citation review was stopped unfinished for the reboot, with no findings recorded.
 
 ## Phase
 Research. RB-0004a (issue #1) is on branch `research/1-metal-loading-chain`, as draft PR #6 (https://github.com/ownback/Ryzentosh-dGPU/pull/6).
@@ -26,15 +26,20 @@ Also done:
 - RE helpers in `tools/re/`, now including `kext_superclass.py` and `dsc_fix_copy.py`.
 
 ## In flight
-The citation review by the reviewer subagent (claude-fable-5-2 / high).
+Nothing is running. The citation review by the reviewer subagent (claude-fable-5-2 / high) was started at 15e13e0 and stopped for the owner reboot before it reported.
 
-## Next step (exact)
-1. Fix the review's findings, then commit and push.
-2. Update the PR #6 body (kernel half, review result, models, skipped stages) and mark it ready.
-3. Send the summary with the X1 config to the Root Orchestrator thread.
+## Next step (exact; there is no kernel analysis left to resume)
+1. **Re-create the review inputs.** The new session scratchpad needs the thinned KDK kexts and amfid, `amfi.otool.txt`, and a fresh shared-cache extraction. The commands are at the top of `.private/rb-0004a/review-brief.md` (git ignores it).
+2. **Re-run the citation review.** Use the Agent type `reviewer` (Fable 5.2 / high, read-only), with the brief in that file and `<S>` replaced by the new scratchpad path.
+3. **Fix its findings** in the findings file, TESTPLAN and INTERFACES. Run a privacy scan, then commit and push.
+4. **Update the PR #6 body.** Cover the kernel half, the review result, the models (Opus 5.5 / max lead, Fable 5.2 / high review) and why the build and hardware-test stages are skipped (research only). Then mark the PR ready.
+5. **Send the summary to the Root Orchestrator thread.** Include the surviving ADR-0004 options, the X1 config (findings file, "Recommendation"), "no additional Linux captures needed" and the control-plane corrections below.
 
 ## REA
-No session is open. Raw evidence lives in `.private/rb-0004a/obs/`, which git ignores. Thinned KDK binaries and the shared-cache extraction are in the session scratchpad and are disposable: re-create them with `lipo -thin x86_64` and `tools/re/dscx`.
+- No target is open (checked 2026-11-27 before the reboot).
+- The session's 34 evidence records are exported to `.private/rb-0004a/rea/rb-0004a-kernel-evidence.json`, which git ignores. It is for local reference only and must never be committed, because it contains decompiled output.
+- Raw observations are in `.private/rb-0004a/obs/`; the kernel tool outputs are in `obs/kernel/`.
+- Thinned KDK binaries and the shared-cache extraction are disposable; re-create them as in step 1.
 
 ## Blockers
 None.
